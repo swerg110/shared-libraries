@@ -13,6 +13,7 @@ public class PackageComparatorCLI {
         String branch2 = args[1];
         APIClient apiClient = new APIClient("https://rdb.altlinux.org/api");
         try {
+
             System.out.println("packages received!");
             // Получаем списки пакетов для каждой ветки с использованием вашей библиотеки
             JSONArray packages1 = apiClient.getBinaryPackages(branch1);
