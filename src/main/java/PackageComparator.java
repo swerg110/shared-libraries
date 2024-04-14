@@ -1,12 +1,12 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 public class PackageComparator {
     public JSONObject comparePackages(JSONArray packages1, JSONArray packages2) {
+        // Initialize sets, maps, and arrays to store package information
         Set<String> names1 = new HashSet<>();
         Set<String> names2 = new HashSet<>();
         HashMap<String, String> versions = new HashMap<>();
@@ -14,8 +14,7 @@ public class PackageComparator {
         HashMap<String, JSONObject> packageMap1 = new HashMap<>();
         HashMap<String, JSONObject> packageMap2 = new HashMap<>();
 
-
-        // Получаем необходимые данные о первом пакете
+        // Extract necessary data from the first package list
         for (int i = 0; i < packages1.length(); i++) {
             JSONObject packageObj1 = packages1.getJSONObject(i);
             String name1 = packageObj1.getString("name");
@@ -23,11 +22,13 @@ public class PackageComparator {
             String release1 = packageObj1.getString("release");
             String versionRelease = version1 + "-" + release1;
 
+            // Store package information in sets and maps
             names1.add(name1);
             packageMap1.put(name1, packageObj1);
             versions.put(name1, versionRelease);
         }
-        // Получаем необходимые данные о втором пакете, а также получаем список для 3его условия из ТЗ
+
+        // Extract necessary data from the second package list and compare versions
         for (int j = 0; j < packages2.length(); j++) {
             JSONObject packageObj2 = packages2.getJSONObject(j);
             String name2 = packageObj2.getString("name");
@@ -35,18 +36,18 @@ public class PackageComparator {
             String release2 = packageObj2.getString("release");
             String versionRelease2 = version2 + "-" + release2;
 
+            // Store package information in sets and maps
             names2.add(name2);
             packageMap2.put(name2, packageObj2);
 
-
+            // Compare versions and releases with the first package list
             if(names1.contains(name2)){
                 String versionRelease1 = versions.get(name2);
                 if(compareVersions(versionRelease1, versionRelease2) > 0) greaterVersions.put(packageMap1.get(name2));
             }
-
         }
 
-        // Находим пакеты, отсутствующие в одном из списков, 1ое и 2ое условие в ТЗ
+        // Find packages missing in each list
         JSONArray missingInSecond = new JSONArray();
         JSONArray missingInFirst = new JSONArray();
 
@@ -64,18 +65,17 @@ public class PackageComparator {
             }
         }
 
-
-        // Формируем JSON с результатами сравнения
+        // Create JSON object with comparison results
         JSONObject result = new JSONObject();
         result.put("missing_in_second", missingInSecond);
         result.put("missing_in_first", missingInFirst);
-        result.put("greater_versions",greaterVersions);
+        result.put("greater_versions", greaterVersions);
 
         return result;
     }
 
+    // Method to compare version strings
     private int compareVersions(String v1, String v2) {
-        // Обычное сравнение, не очень понятно, как сравнивать версии, при возможности можно без проблем изменить
         return v1.compareTo(v2);
     }
 }
