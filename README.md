@@ -21,7 +21,7 @@ Its essence is to take the names of two branches as input and output 3 JSON pack
 
 1. Clone repository:
 ```bash
-git clone https://github.com/your_username/your_project.git
+git clone https://github.com/swerg110/shared-libraries.git
 ```
 2. Go to project directory:
 
