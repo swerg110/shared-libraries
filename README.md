@@ -18,7 +18,13 @@ Its essence is to take the names of two branches as input and output 3 JSON pack
 - **gitignore**: gitignor for github
 
 ## Installation and launch
-
+0. Install maven and git
+```bash
+apt-get install maven
+```
+```bash
+apt-get install git
+```
 1. Clone repository:
 ```bash
 git clone https://github.com/swerg110/shared-libraries.git
@@ -28,6 +34,7 @@ git clone https://github.com/swerg110/shared-libraries.git
 ```bash
 cd shared-libraries
 ```
+
 3. Get the project using Maven:
 ```bash
 mvn clean install
