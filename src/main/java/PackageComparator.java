@@ -1,3 +1,4 @@
+import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.HashMap;
@@ -34,16 +35,16 @@ public class PackageComparator {
             String name2 = packageObj2.getString("name");
             String version2 = packageObj2.getString("version");
             String release2 = packageObj2.getString("release");
-            String versionRelease2 = version2 + "-" + release2;
-
+            ComparableVersion versionRelease2 = new ComparableVersion(version2 + "-" + release2);
             // Store package information in sets and maps
             names2.add(name2);
             packageMap2.put(name2, packageObj2);
 
             // Compare versions and releases with the first package list
+            // with use org.apache.maven.artifact.versioning.ComparableVersion
             if(names1.contains(name2)){
-                String versionRelease1 = versions.get(name2);
-                if(compareVersions(versionRelease1, versionRelease2) > 0) greaterVersions.put(packageMap1.get(name2));
+                ComparableVersion versionRelease1 = new ComparableVersion(versions.get(name2));
+                if(versionRelease1.compareTo(versionRelease2) > 0) greaterVersions.put(packageMap1.get(name2));
             }
         }
 
@@ -72,10 +73,5 @@ public class PackageComparator {
         result.put("greater_versions", greaterVersions);
 
         return result;
-    }
-
-    // Method to compare version strings
-    private int compareVersions(String v1, String v2) {
-        return v1.compareTo(v2);
     }
 }
