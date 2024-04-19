@@ -41,5 +41,5 @@ mvn clean install
 ```
 4. Launch the application:
 ```bash
-java -cp target/classes:target/dependency/* PackageComparatorCLI arg1 arg2
+java -cp "target/classes:target/dependency/*" PackageComparatorCLI arg1 arg2
 ```
